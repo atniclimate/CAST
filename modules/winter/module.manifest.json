@@ -1,0 +1,7 @@
+{
+  "id": "winter",
+  "name": "Winter Weather",
+  "hazards": ["blizzard", "snow", "ice"],
+  "status": "planned",
+  "notes": "Empty contract manifest — no surfaces, layers, telemetry, presets, or briefing sections are declared yet."
+}

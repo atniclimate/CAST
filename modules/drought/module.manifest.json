@@ -1,0 +1,7 @@
+{
+  "id": "drought",
+  "name": "Drought, Extreme Heat & Wildfire",
+  "hazards": ["drought", "extreme-heat", "wildfire"],
+  "status": "planned-migration",
+  "notes": "Dynamic Drought Module (github.com/atniclimate/dynamic-drought-module) migrates here — ROADMAP Phase 1."
+}

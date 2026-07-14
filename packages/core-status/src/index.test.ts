@@ -60,17 +60,15 @@ describe('createStatusRegistry', () => {
       expect(() => registry.report('hydro.demo', { state, asOf: null })).toThrow(/asOf/);
     }
     // unavailable legitimately has nothing to date
-    expect(() =>
-      registry.report('hydro.demo', { state: 'unavailable', asOf: null }),
-    ).not.toThrow();
+    expect(() => registry.report('hydro.demo', { state: 'unavailable', asOf: null })).not.toThrow();
   });
 
   it('rejects unparseable asOf timestamps', () => {
     const registry = createStatusRegistry();
     registry.register('hydro.demo');
-    expect(() =>
-      registry.report('hydro.demo', { state: 'live', asOf: 'yesterday-ish' }),
-    ).toThrow(/ISO 8601/);
+    expect(() => registry.report('hydro.demo', { state: 'live', asOf: 'yesterday-ish' })).toThrow(
+      /ISO 8601/,
+    );
   });
 });
 

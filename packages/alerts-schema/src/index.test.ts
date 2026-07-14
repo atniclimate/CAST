@@ -35,7 +35,17 @@ describe('normalizeCapAlert', () => {
     effective: '2026-07-14T10:00:00-07:00',
     expires: '2026-07-15T10:00:00-07:00',
     areaDesc: 'Example County',
-    geometry: { type: 'Polygon' as const, coordinates: [[[0, 0], [1, 0], [1, 1], [0, 0]]] },
+    geometry: {
+      type: 'Polygon' as const,
+      coordinates: [
+        [
+          [0, 0],
+          [1, 0],
+          [1, 1],
+          [0, 0],
+        ],
+      ],
+    },
   };
 
   // Shaped like an ECCC CAP <info> block projection; note the missing
@@ -73,9 +83,7 @@ describe('normalizeCapAlert', () => {
 
   it('rejects alerts missing identity fields', () => {
     expect(() => normalizeCapAlert({ ...nwsShaped, id: '' }, 'us')).toThrow(/"id"/);
-    expect(() => normalizeCapAlert({ ...nwsShaped, sent: 'sometime' }, 'us')).toThrow(
-      /parseable/,
-    );
+    expect(() => normalizeCapAlert({ ...nwsShaped, sent: 'sometime' }, 'us')).toThrow(/parseable/);
   });
 
   it('preserves the raw payload for audit when provided', () => {

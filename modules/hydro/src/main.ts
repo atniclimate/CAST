@@ -97,7 +97,8 @@ const STATE_COLORS: Record<string, string> = {
 
 function renderPill(snapshot: StatusSnapshot): void {
   dot.style.background = STATE_COLORS[snapshot.state] ?? '#888';
-  const asOf = snapshot.asOf === null ? 'no data' : `as of ${new Date(snapshot.asOf).toLocaleTimeString()}`;
+  const asOf =
+    snapshot.asOf === null ? 'no data' : `as of ${new Date(snapshot.asOf).toLocaleTimeString()}`;
   label.textContent = `demo gauges: ${snapshot.state} · ${asOf}`;
   pill.title = snapshot.detail ?? '';
 }
@@ -110,7 +111,8 @@ status.subscribe((id, snapshot) => {
 pill.addEventListener('click', () => {
   const current = status.get(DEMO_STATUS_ID);
   const next =
-    STATUS_STATES[(STATUS_STATES.indexOf(current.state) + 1) % STATUS_STATES.length] ?? 'unavailable';
+    STATUS_STATES[(STATUS_STATES.indexOf(current.state) + 1) % STATUS_STATES.length] ??
+    'unavailable';
   status.report(DEMO_STATUS_ID, {
     state: next,
     asOf: next === 'unavailable' ? null : (current.asOf ?? new Date().toISOString()),

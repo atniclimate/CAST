@@ -1,0 +1,7 @@
+{
+  "id": "severe",
+  "name": "Severe Weather",
+  "hazards": ["tornado", "high-wind", "hail"],
+  "status": "planned",
+  "notes": "Empty contract manifest — no surfaces, layers, telemetry, presets, or briefing sections are declared yet."
+}

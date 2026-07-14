@@ -33,9 +33,7 @@ export function validateHazardModule(module: HazardModule): string[] {
   const checkHazards = (where: string, hazards: HazardKind[]): void => {
     for (const hazard of hazards) {
       if (!declared.has(hazard)) {
-        problems.push(
-          `${where} references hazard "${hazard}" that the module does not declare`,
-        );
+        problems.push(`${where} references hazard "${hazard}" that the module does not declare`);
       }
     }
   };

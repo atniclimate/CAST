@@ -10,21 +10,21 @@ This is a **pnpm monorepo**. Hazard modules are independent, serverless-static w
 that all implement one shared TypeScript contract; core packages provide the plumbing
 they share.
 
-| Path | Package | Role |
-| --- | --- | --- |
-| `packages/contract` | `@ewm/contract` | **The hazard module contract** — the interfaces every module implements |
-| `packages/core-status` | `@ewm/core-status` | Five-state honest-status machine (`live / cached / stale / degraded / unavailable`) with "as of" timestamps |
-| `packages/core-net` | `@ewm/core-net` | Abortable fetch with timeout + retry, wired into the status registry |
-| `packages/core-state` | `@ewm/core-state` | URL-as-state: every composed view is shareable as a URL |
-| `packages/sources` | `@ewm/sources` | Verified source registry — every external endpoint is registered with owner/license/cadence/verification metadata |
-| `packages/places` | `@ewm/places` | Boundary/place engine + the **sovereign empty-placeholder pattern** (no Nation data ever ships in this repo) |
-| `packages/alerts-schema` | `@ewm/alerts-schema` | Normalized CAP-derived alert types (NWS **and** Environment Canada ready) |
-| `packages/map-core` | `@ewm/map-core` | MapLibre GL wrapper + layer/surface registry |
-| `modules/drought` | — | Stub. The existing [Dynamic Drought Module](https://github.com/atniclimate/dynamic-drought-module) migrates here |
-| `modules/hydro` | `@ewm/module-hydro` | Proof-of-life module: flooding / atmospheric rivers / heavy precipitation |
-| `modules/winter` | — | Stub: blizzard, snow, ice |
-| `modules/severe` | — | Stub: tornado, high wind, hail |
-| `apps/shell` | — | Stub: the future unified shell that hosts all modules |
+| Path                     | Package              | Role                                                                                                              |
+| ------------------------ | -------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| `packages/contract`      | `@ewm/contract`      | **The hazard module contract** — the interfaces every module implements                                           |
+| `packages/core-status`   | `@ewm/core-status`   | Five-state honest-status machine (`live / cached / stale / degraded / unavailable`) with "as of" timestamps       |
+| `packages/core-net`      | `@ewm/core-net`      | Abortable fetch with timeout + retry, wired into the status registry                                              |
+| `packages/core-state`    | `@ewm/core-state`    | URL-as-state: every composed view is shareable as a URL                                                           |
+| `packages/sources`       | `@ewm/sources`       | Verified source registry — every external endpoint is registered with owner/license/cadence/verification metadata |
+| `packages/places`        | `@ewm/places`        | Boundary/place engine + the **sovereign empty-placeholder pattern** (no Nation data ever ships in this repo)      |
+| `packages/alerts-schema` | `@ewm/alerts-schema` | Normalized CAP-derived alert types (NWS **and** Environment Canada ready)                                         |
+| `packages/map-core`      | `@ewm/map-core`      | MapLibre GL wrapper + layer/surface registry                                                                      |
+| `modules/drought`        | —                    | Stub. The existing [Dynamic Drought Module](https://github.com/atniclimate/dynamic-drought-module) migrates here  |
+| `modules/hydro`          | `@ewm/module-hydro`  | Proof-of-life module: flooding / atmospheric rivers / heavy precipitation                                         |
+| `modules/winter`         | —                    | Stub: blizzard, snow, ice                                                                                         |
+| `modules/severe`         | —                    | Stub: tornado, high wind, hail                                                                                    |
+| `apps/shell`             | —                    | Stub: the future unified shell that hosts all modules                                                             |
 
 ## Quickstart
 

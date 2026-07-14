@@ -57,9 +57,9 @@ describe('serializeViewState / parseViewState', () => {
   });
 
   it('rejects params that collide with reserved keys', () => {
-    expect(() =>
-      serializeViewState({ center: [0, 0], zoom: 1, params: { z: 'sneaky' } }),
-    ).toThrow(/reserved/);
+    expect(() => serializeViewState({ center: [0, 0], zoom: 1, params: { z: 'sneaky' } })).toThrow(
+      /reserved/,
+    );
   });
 });
 

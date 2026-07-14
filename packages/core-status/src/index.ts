@@ -78,7 +78,9 @@ export function validateSnapshot(snapshot: StatusSnapshot): string[] {
     problems.push(`unknown state "${String(snapshot.state)}"`);
   }
   if (snapshot.state !== 'unavailable' && snapshot.asOf === null) {
-    problems.push(`state "${snapshot.state}" requires an "asOf" timestamp — showing data without its age is dishonest`);
+    problems.push(
+      `state "${snapshot.state}" requires an "asOf" timestamp — showing data without its age is dishonest`,
+    );
   }
   if (snapshot.asOf !== null && Number.isNaN(Date.parse(snapshot.asOf))) {
     problems.push(`"asOf" is not a parseable ISO 8601 timestamp: "${snapshot.asOf}"`);
