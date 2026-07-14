@@ -21,7 +21,7 @@ they share.
 | `packages/alerts-schema` | `@ewm/alerts-schema` | Normalized CAP-derived alert types (NWS **and** Environment Canada ready)                                         |
 | `packages/map-core`      | `@ewm/map-core`      | MapLibre GL wrapper + layer/surface registry                                                                      |
 | `modules/drought`        | —                    | Stub. The existing [Dynamic Drought Module](https://github.com/atniclimate/dynamic-drought-module) migrates here  |
-| `modules/hydro`          | `@ewm/module-hydro`  | Proof-of-life module: flooding / atmospheric rivers / heavy precipitation                                         |
+| `modules/hydro`          | `hydro`              | Proof-of-life module: flooding / atmospheric rivers / heavy precipitation                                         |
 | `modules/winter`         | —                    | Stub: blizzard, snow, ice                                                                                         |
 | `modules/severe`         | —                    | Stub: tornado, high wind, hail                                                                                    |
 | `apps/shell`             | —                    | Stub: the future unified shell that hosts all modules                                                             |
@@ -35,7 +35,7 @@ pnpm lint
 pnpm typecheck
 pnpm test
 pnpm build
-pnpm --filter @ewm/module-hydro dev   # proof-of-life map at http://localhost:5173
+pnpm --filter hydro dev   # proof-of-life map at http://localhost:5173
 ```
 
 ## Architecture invariants

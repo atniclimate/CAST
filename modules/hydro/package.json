@@ -1,5 +1,5 @@
 {
-  "name": "@ewm/module-hydro",
+  "name": "hydro",
   "version": "0.1.0",
   "private": true,
   "description": "Hydro hazard module (flooding, atmospheric rivers, heavy precipitation). Currently a proof-of-life that exercises the module contract end to end.",
