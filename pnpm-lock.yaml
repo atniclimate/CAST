@@ -15,6 +15,9 @@ catalogs:
     typescript:
       specifier: ^5.9.3
       version: 5.9.3
+    vite:
+      specifier: ^7.1.0
+      version: 7.3.6
     vitest:
       specifier: ^3.2.4
       version: 3.2.7
@@ -38,6 +41,40 @@ importers:
       typescript-eslint:
         specifier: ^8.46.0
         version: 8.64.0(eslint@9.39.5)(typescript@5.9.3)
+
+  modules/hydro:
+    dependencies:
+      '@ewm/contract':
+        specifier: workspace:*
+        version: link:../../packages/contract
+      '@ewm/core-state':
+        specifier: workspace:*
+        version: link:../../packages/core-state
+      '@ewm/core-status':
+        specifier: workspace:*
+        version: link:../../packages/core-status
+      '@ewm/map-core':
+        specifier: workspace:*
+        version: link:../../packages/map-core
+      '@ewm/places':
+        specifier: workspace:*
+        version: link:../../packages/places
+      '@ewm/sources':
+        specifier: workspace:*
+        version: link:../../packages/sources
+      '@types/geojson':
+        specifier: 'catalog:'
+        version: 7946.0.16
+      maplibre-gl:
+        specifier: 'catalog:'
+        version: 5.24.0
+    devDependencies:
+      typescript:
+        specifier: 'catalog:'
+        version: 5.9.3
+      vite:
+        specifier: 'catalog:'
+        version: 7.3.6
 
   packages/alerts-schema:
     dependencies:

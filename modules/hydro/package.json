@@ -1,0 +1,27 @@
+{
+  "name": "@ewm/module-hydro",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Hydro hazard module (flooding, atmospheric rivers, heavy precipitation). Currently a proof-of-life that exercises the module contract end to end.",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@ewm/contract": "workspace:*",
+    "@ewm/core-state": "workspace:*",
+    "@ewm/core-status": "workspace:*",
+    "@ewm/map-core": "workspace:*",
+    "@ewm/places": "workspace:*",
+    "@ewm/sources": "workspace:*",
+    "@types/geojson": "catalog:",
+    "maplibre-gl": "catalog:"
+  },
+  "devDependencies": {
+    "typescript": "catalog:",
+    "vite": "catalog:"
+  }
+}
