@@ -1,0 +1,9 @@
+# Normalize all text files to LF in the repository so Windows and CI agree.
+* text=auto eol=lf
+
+# Binary assets
+*.png binary
+*.jpg binary
+*.gif binary
+*.woff2 binary
+*.pmtiles binary
