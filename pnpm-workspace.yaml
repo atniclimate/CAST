@@ -1,0 +1,13 @@
+packages:
+  - packages/*
+  - modules/*
+  - apps/*
+
+# Single source of truth for shared dependency versions.
+# Workspace packages reference these with "catalog:".
+catalog:
+  typescript: ^5.9.3
+  vitest: ^3.2.4
+  vite: ^7.1.0
+  maplibre-gl: ^5.8.0
+  '@types/geojson': ^7946.0.16

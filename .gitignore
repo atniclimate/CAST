@@ -1,0 +1,23 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+.turbo/
+
+# Test output
+coverage/
+
+# Environment / secrets — never committed
+.env
+.env.*
+
+# Editor / OS noise
+.DS_Store
+Thumbs.db
+*.log
+
+# Sovereign data must never enter this repository (see docs/DATA_SOVEREIGNTY.md).
+# Deployment-time place data lives outside version control by convention:
+**/places.local.json
+**/sovereign-data/

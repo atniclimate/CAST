@@ -1,0 +1,27 @@
+{
+  "name": "extreme-weather-monitor",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Multi-hazard monitoring, preparedness, and response platform centering Tribal Nations. Built by ATNI Climate.",
+  "license": "MIT",
+  "type": "module",
+  "packageManager": "pnpm@11.9.0",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "build": "pnpm -r --if-present build",
+    "typecheck": "pnpm -r --if-present typecheck",
+    "test": "pnpm -r --if-present test",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.0",
+    "eslint": "^9.39.0",
+    "prettier": "^3.6.2",
+    "typescript": "catalog:",
+    "typescript-eslint": "^8.46.0"
+  }
+}
