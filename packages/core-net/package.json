@@ -1,0 +1,24 @@
+{
+  "name": "@ewm/core-net",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Abortable fetch with timeout and retry, integrated with the EWM status registry.",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
+    }
+  },
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@ewm/core-status": "workspace:*"
+  },
+  "devDependencies": {
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

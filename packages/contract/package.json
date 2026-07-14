@@ -1,0 +1,28 @@
+{
+  "name": "@ewm/contract",
+  "version": "0.1.0",
+  "private": true,
+  "description": "THE hazard module contract: the TypeScript interfaces every EWM hazard module implements and the platform context it registers against.",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
+    }
+  },
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@ewm/core-state": "workspace:*",
+    "@ewm/core-status": "workspace:*",
+    "@ewm/map-core": "workspace:*",
+    "@ewm/places": "workspace:*",
+    "@ewm/sources": "workspace:*"
+  },
+  "devDependencies": {
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

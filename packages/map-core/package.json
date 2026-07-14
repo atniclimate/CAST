@@ -1,0 +1,25 @@
+{
+  "name": "@ewm/map-core",
+  "version": "0.1.0",
+  "private": true,
+  "description": "MapLibre GL wrapper and layer/surface registry. The only package that touches the map runtime.",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
+    }
+  },
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@types/geojson": "catalog:",
+    "maplibre-gl": "catalog:"
+  },
+  "devDependencies": {
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

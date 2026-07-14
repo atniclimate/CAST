@@ -1,0 +1,24 @@
+{
+  "name": "@ewm/places",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Boundary/place engine with the sovereign empty-placeholder pattern: the shape ships, the data never does.",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
+    }
+  },
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@types/geojson": "catalog:"
+  },
+  "devDependencies": {
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

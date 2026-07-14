@@ -3,6 +3,10 @@ packages:
   - modules/*
   - apps/*
 
+# esbuild's postinstall installs its platform binary; required for Vite.
+allowBuilds:
+  esbuild: true
+
 # Single source of truth for shared dependency versions.
 # Workspace packages reference these with "catalog:".
 catalog:

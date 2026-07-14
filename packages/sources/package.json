@@ -1,0 +1,21 @@
+{
+  "name": "@ewm/sources",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Verified source registry: every external endpoint EWM touches is registered here with owner, license, cadence, region, and a human verification date.",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
+    }
+  },
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "name": "@ewm/core-state",
+  "version": "0.1.0",
+  "private": true,
+  "description": "URL-as-state: serialize and restore any composed map view as a shareable URL fragment.",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
+    }
+  },
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

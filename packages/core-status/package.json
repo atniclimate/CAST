@@ -1,0 +1,21 @@
+{
+  "name": "@ewm/core-status",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Five-state honest-status machine with 'as of' timestamps. Every data layer in EWM reports through this.",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
+    }
+  },
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}
