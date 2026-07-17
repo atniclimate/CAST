@@ -8,8 +8,13 @@
     ".": {
       "types": "./src/index.ts",
       "default": "./src/index.ts"
-    }
+    },
+    "./registry.public.json": "./data/registry.public.json"
   },
+  "files": [
+    "src",
+    "data"
+  ],
   "scripts": {
     "typecheck": "tsc -p tsconfig.json",
     "test": "vitest run"
