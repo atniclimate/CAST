@@ -1,8 +1,11 @@
-# Extreme Weather Monitor (EWM)
+# ATNI-CAST — Climate Alerts & Severity Tracker
 
 A multi-hazard monitoring, preparedness, and response platform built by
 [ATNI](https://atnitribes.org) (Affiliated Tribes of Northwest Indians) climate staff.
-EWM centers Tribal Nations, extends to Canadian First Nations, and is usable broadly.
+ATNI-CAST centers Tribal Nations, extends to Canadian First Nations, and is usable
+broadly. Four hazard modules sit behind **SHIELD** (Severe Hazards Intelligence &
+Emergency Link Dashboard), a location-aware entry point. The product definition is
+[`docs/ATNI-CAST.md`](docs/ATNI-CAST.md).
 
 ## What lives here
 
@@ -19,6 +22,8 @@ they share.
 | `packages/sources`       | `@ewm/sources`       | Verified source registry — every external endpoint is registered with owner/license/cadence/verification metadata |
 | `packages/places`        | `@ewm/places`        | Boundary/place engine + the **sovereign empty-placeholder pattern** (no Nation data ever ships in this repo)      |
 | `packages/alerts-schema` | `@ewm/alerts-schema` | Normalized CAP-derived alert types (NWS **and** Environment Canada ready)                                         |
+| `packages/design-tokens` | `@ewm/design-tokens` | The ATNI Climate Design System as code: color, type scale, surfaces, spacing, self-hosted fonts                    |
+| `packages/tribal-registry` | `@ewm/tribal-registry` | Tribal Database schema types, the T0/T1 rendering tier gate, provenance-gated loader (ships no data)            |
 | `packages/map-core`      | `@ewm/map-core`      | MapLibre GL wrapper + layer/surface registry                                                                      |
 | `modules/drought`        | —                    | Stub. The existing [Dynamic Drought Module](https://github.com/atniclimate/dynamic-drought-module) migrates here  |
 | `modules/hydro`          | `hydro`              | Proof-of-life module: flooding / atmospheric rivers / heavy precipitation                                         |

@@ -21,3 +21,15 @@ Thumbs.db
 # Deployment-time place data lives outside version control by convention:
 **/places.local.json
 **/sovereign-data/
+/data/local/
+
+# Local working, planning, and orchestration files — never published
+# (maintainer directive 07/17/2026: the public repo carries source files only).
+/.claude/
+/AGENTS.md
+/CLAUDE.md
+/memory/
+/decisions.yaml
+/docs/CODEX_GUIDE.md
+/docs/research/
+/docs/agents/
