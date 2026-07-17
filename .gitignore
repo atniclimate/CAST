@@ -17,11 +17,13 @@ coverage/
 Thumbs.db
 *.log
 
-# Sovereign data must never enter this repository (see docs/DATA_SOVEREIGNTY.md).
-# Deployment-time place data lives outside version control by convention:
+# Sensitive data must never enter this repository (see docs/DATA_SOVEREIGNTY.md).
+# Public T0 registry data may ship (DS-014, 07/17/2026); named-person contacts
+# and community-level sovereign data stay outside version control:
 **/places.local.json
 **/sovereign-data/
 /data/local/
+/data/sensitive/
 
 # Local working, planning, and orchestration files — never published
 # (maintainer directive 07/17/2026: the public repo carries source files only).

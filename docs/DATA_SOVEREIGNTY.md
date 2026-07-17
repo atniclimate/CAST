@@ -1,65 +1,81 @@
 # Data Sovereignty
 
-EWM centers Tribal Nations. That is an architectural property, not a landing-page
-sentence, and it produces hard rules about what this repository may contain and what
-the platform may do with Nation-specific data.
+ATNI-CAST centers Tribal Nations. That is an architectural property, not a
+landing-page sentence, and it produces hard rules about what this repository
+may contain and what the platform may do with Nation-specific data. This
+document was revised 07/17/2026 under decision DS-014; the prior revision
+treated all Nation data as non-shippable, and that rule now applies only to
+the categories listed below.
 
-## What never ships in this repo
+## The tier model (CARE Principles)
 
-- Tribal boundary geometries, in any format, at any precision.
-- Names, locations, or attributes of specific communities, facilities, or cultural
-  sites.
-- Community indicator data (health, infrastructure, vulnerability, capacity — anything
-  a Nation might attach to its places).
-- Test fixtures derived from any of the above. Test data is fictional and labeled as
-  such (see `packages/places/src/index.test.ts`).
+- **T0, public.** Publicly accessible Nation data: official names, general
+  locations, public-source boundaries (Census AIANNH, NRCan Aboriginal
+  Lands, BIA LAR for general cartography), hazard exposure context, public
+  websites, and all weather, climate, and alert data from public agencies.
+  T0 data embeds directly in the suite and may ship in this repository. The
+  registry's scope is all federally recognized and state-recognized Tribes
+  and Canadian First Nations.
+- **T1, attribution required.** Contact information and other
+  Tribe-associated records that render only when a user has explicitly
+  selected that specific Tribal Nation, always with attribution. The tier
+  gate in `@ewm/tribal-registry` is the only sanctioned rendering path.
+- **T2 and T3, confidential and sacred.** Never enter this application in
+  any form. No schema, no field, no placeholder; the loader strips anything
+  so marked before it can exist in memory.
 
-If a contribution needs realistic sovereign-shaped data to develop against, it uses the
-fictional fixtures or generates synthetic data in code, the way `modules/hydro` does.
+## What still never ships in this repository
 
-## The empty-placeholder pattern
+1. **Named-person contact details** (a person's name beside a direct phone
+   number or email). Their handling is an open decision (DS-015); until it
+   is ruled, sensitive extracts live only under `data/sensitive/`, which
+   version control refuses.
+2. Community indicator data, cultural or sacred site information, and
+   anything a Nation has not published to the public.
+3. Data whose source terms forbid redistribution (for example BC TANTALIS
+   Treaty settlement lands, licensed Access Only, until explicit permission
+   is obtained).
+4. Test fixtures derived from any of the above. Test data is fictional and
+   labeled as such.
 
-`@ewm/places` ships the **shape** of place data and none of the data:
+## The registry is purpose-built
 
-- `PlacesDataset` — the schema a deploying organization fills: `schemaVersion`,
-  `provenance`, `places[]` (id, name, kind, geometry, opaque `indicators`).
-- `EMPTY_PLACES_DATASET` — the placeholder every fresh deployment starts with:
-  structurally valid, semantically empty, and self-describing.
-- Deployments provide their own dataset **outside version control**. Convention:
-  `places.local.json`, which the root `.gitignore` refuses (alongside
-  `**/sovereign-data/`).
+The example Tribal Database is a scaffold: this project builds its own
+registry, informed by that structure, populated from public sources with
+full provenance per record. The loader (`@ewm/tribal-registry`) enforces two
+structural gates: registry data without a provenance statement does not
+load, and records marked above T1 do not load, in any deployment, ever.
 
-Each Nation populates its own deployment, on infrastructure it chooses, from data it
-controls. Two Nations running EWM share code and share nothing else.
+Attribution commitments travel with the data. Native Land Digital layers are
+used with full provenance and full attribution, working with that project
+directly; licensing reconciliation across all sources is a scheduled
+late-phase pass (DS-016), and every layer carries owner, license, and
+vintage metadata in `packages/sources` from the day it is staged.
 
-## The provenance gate
+## Community data keeps the empty-placeholder pattern
 
-`loadPlacesDataset` **rejects** any dataset that contains places but lacks a non-empty
-`provenance` statement — a human-written declaration of the authority under which the
-data is published (e.g. "Published by the <Nation> GIS office, approved 2026-05-01").
-This is a structural gate, not a convention: sovereign data without stated authority
-does not load, in any deployment, ever.
-
-The `indicators` field is opaque to the platform by contract. Core code never
-interprets, aggregates, or transmits it. Features that want to _render_ indicators
-receive render instructions from the deployment, not schema knowledge in core.
+`@ewm/places` still ships the shape of community-level data and none of the
+data. Indicators, community places, and anything a Nation attaches to its
+places remain deployment-provided, outside version control, behind the
+provenance gate. The public registry describes Nations from public sources;
+the places engine carries what Nations choose to add, on infrastructure they
+control.
 
 ## No phoning home
 
-The platform makes no requests that carry place data anywhere. Nothing in core or in
-any module transmits the contents of the place engine — there is no analytics
-endpoint, no telemetry, no "usage improvement" channel. The verified source registry
-(all outbound URLs in one auditable table) is what makes this claim checkable.
+The platform makes no requests that carry place or selection data anywhere.
+There is no analytics endpoint, no telemetry, and no usage channel. The
+verified source registry, with every outbound URL in one auditable table, is
+what makes this claim checkable.
 
-## Relation to the alerts backend (future)
+## Boundary displays
 
-The planned alerts/subscription backend inverts the flow — users opt in to receive
-alerts for areas they choose. Its design must preserve the same property: a Nation's
-boundary used for alert matching stays under that Nation's control (deployment-side
-matching or Nation-hosted services, not a central boundary database). That design work
-is tracked in ROADMAP and must be reviewed against this document.
+Every map and boundary display carries the sovereignty disclaimer:
+public-source land-area representations are not definitive depictions of
+Tribal jurisdiction. The disclaimer is a component, not copy-pasted text.
 
 ## Review rule
 
-Any PR touching `@ewm/places`, `.gitignore`'s sovereign-data lines, or this document
-gets a named human reviewer and cannot be merged by automation alone.
+Any PR touching `@ewm/tribal-registry`, `@ewm/places`, the sovereign-data
+lines of `.gitignore`, or this document gets a named human reviewer and
+cannot be merged by automation alone.

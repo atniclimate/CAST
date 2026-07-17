@@ -10,7 +10,7 @@ allowBuilds:
 # Single source of truth for shared dependency versions.
 # Workspace packages reference these with "catalog:".
 catalog:
-  typescript: ^5.9.3
+  typescript: ^7.0.2
   vitest: ^3.2.4
   vite: ^7.1.0
   maplibre-gl: ^5.8.0
