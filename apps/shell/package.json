@@ -1,0 +1,30 @@
+{
+  "name": "shield",
+  "version": "0.1.0",
+  "private": true,
+  "description": "SHIELD: Severe Hazards Intelligence & Emergency Link Dashboard. The location-aware entry point hosting all four hazard modules.",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@ewm/alerts-schema": "workspace:*",
+    "@ewm/contract": "workspace:*",
+    "@ewm/core-state": "workspace:*",
+    "@ewm/core-status": "workspace:*",
+    "@ewm/design-tokens": "workspace:*",
+    "@ewm/tribal-registry": "workspace:*",
+    "react": "catalog:",
+    "react-dom": "catalog:"
+  },
+  "devDependencies": {
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "@vitejs/plugin-react": "catalog:",
+    "typescript": "catalog:",
+    "vite": "catalog:"
+  }
+}

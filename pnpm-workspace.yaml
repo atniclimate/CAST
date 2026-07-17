@@ -11,6 +11,11 @@ allowBuilds:
 # Workspace packages reference these with "catalog:".
 catalog:
   typescript: ^7.0.2
+  react: ^19.2.0
+  react-dom: ^19.2.0
+  '@types/react': ^19.2.0
+  '@types/react-dom': ^19.2.0
+  '@vitejs/plugin-react': ^5.0.0
   vitest: ^3.2.4
   vite: ^7.1.0
   maplibre-gl: ^5.8.0
