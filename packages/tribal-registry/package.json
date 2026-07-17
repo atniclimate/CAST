@@ -1,0 +1,21 @@
+{
+  "name": "@ewm/tribal-registry",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Tribal Database schema types, the T0/T1 rendering tier gate, and the provenance-gated loader. Ships the shape of the registry and none of the data.",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
+    }
+  },
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}
