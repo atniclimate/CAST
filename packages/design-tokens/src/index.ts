@@ -85,6 +85,38 @@ export const semantic = {
 } as const;
 
 // ---------------------------------------------------------------------------
+// Severity bands (DS-003 / DS-008)
+// ---------------------------------------------------------------------------
+
+/**
+ * The four ranked impact bands plus the unranked Unstated state (DS-003),
+ * colored per the ratified alert-convention warm ramp (DS-008), evolved from
+ * the shipped prototype's families. PROVISIONAL: the DS-008 color-vision and
+ * contrast audit gates final values. Badges pair each background with its
+ * ink, and band text always renders; color never carries meaning alone.
+ * Regulatory scales (USDM, AQI, AQHI) keep their own canonical colors and
+ * never use these tokens.
+ */
+export const severityBand = {
+  extreme: { bg: '#7C2D12', ink: '#FFFFFF' },
+  severe: { bg: '#EF4444', ink: '#FFFFFF' },
+  moderate: { bg: '#F97316', ink: '#010B13' },
+  minor: { bg: '#FBBF24', ink: '#010B13' },
+  unstated: { bg: '#98A1B4', ink: '#010B13' },
+} as const;
+
+export type SeverityBandName = keyof typeof severityBand;
+
+/** Ranked order, most severe first; unstated is unranked and sorts last. */
+export const severityBandOrder: readonly SeverityBandName[] = [
+  'extreme',
+  'severe',
+  'moderate',
+  'minor',
+  'unstated',
+];
+
+// ---------------------------------------------------------------------------
 // Typography
 // ---------------------------------------------------------------------------
 

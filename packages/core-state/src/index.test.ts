@@ -61,6 +61,26 @@ describe('serializeViewState / parseViewState', () => {
       /reserved/,
     );
   });
+
+  it('round-trips the selected Nation ID through the n key', () => {
+    const serialized = serializeViewState({ center: [-122.5, 48.7], zoom: 8, nation: 'ncast-x7f2' });
+    expect(serialized).toContain('n=ncast-x7f2');
+    const parsed = parseViewState(serialized);
+    expect(parsed?.nation).toBe('ncast-x7f2');
+  });
+
+  it('omits the n key when no Nation is selected and never invents one', () => {
+    const serialized = serializeViewState({ center: [0, 0], zoom: 1 });
+    expect(serialized).not.toContain('n=');
+    expect(parseViewState(serialized)?.nation).toBeUndefined();
+    expect(parseViewState('c=0,0&z=1&n=')?.nation).toBeUndefined();
+  });
+
+  it('rejects a params key of n now that Nation selection is reserved', () => {
+    expect(() => serializeViewState({ center: [0, 0], zoom: 1, params: { n: 'sneaky' } })).toThrow(
+      /reserved/,
+    );
+  });
 });
 
 describe('createMemoryUrlStateBus', () => {

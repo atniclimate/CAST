@@ -48,6 +48,18 @@
   --color-tag-sovereignty-bg: #f6e6f8;
   --color-tag-neutral-bg: #eef1f6;
 
+  /* Severity bands (DS-003/DS-008; provisional pending the CVD audit) */
+  --band-extreme-bg: #7c2d12;
+  --band-extreme-ink: #ffffff;
+  --band-severe-bg: #ef4444;
+  --band-severe-ink: #ffffff;
+  --band-moderate-bg: #f97316;
+  --band-moderate-ink: #010b13;
+  --band-minor-bg: #fbbf24;
+  --band-minor-ink: #010b13;
+  --band-unstated-bg: #98a1b4;
+  --band-unstated-ink: #010b13;
+
   /* Typography */
   --font-display: 'Spartan MB', 'Arial Black', sans-serif;
   --font-body: 'TeX Gyre Heros', 'Helvetica Neue', Arial, sans-serif;

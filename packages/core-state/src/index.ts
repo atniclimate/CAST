@@ -4,10 +4,11 @@
  * Platform invariant #4: any view a user composes must be shareable as a URL.
  * Serialization lives here, in core, so every module speaks the same format.
  *
- * Reserved keys: `c` (center "lon,lat"), `z` (zoom), `s` (active condition
- * surface id), `e` (comma-separated visible event-layer ids). Anything else
- * round-trips through `params` so modules can add their own state under
- * namespaced keys (convention: `<moduleId>.<key>`).
+ * Reserved keys: `c` (center "lon,lat"), `z` (zoom), `n` (selected Tribal
+ * Nation, opaque stable Nation ID), `s` (active condition surface id), `e`
+ * (comma-separated visible event-layer ids). Anything else round-trips
+ * through `params` so modules can add their own state under namespaced keys
+ * (convention: `<moduleId>.<key>`).
  *
  * Framework-agnostic: vanilla TypeScript, zero dependencies.
  */
@@ -16,6 +17,13 @@ export interface ViewState {
   /** [longitude, latitude] in WGS84. */
   center: [number, number];
   zoom: number;
+  /**
+   * Selected Tribal Nation: the opaque stable Nation ID. Per DS-006 the
+   * presence of this key in a URL constitutes explicit selection (it gates
+   * T1 rendering). Legacy-ID redirects resolve in the registry BEFORE this
+   * state is written; this layer carries the canonical ID only.
+   */
+  nation?: string;
   /** Active condition surface id (one visible at a time). */
   surface?: string;
   /** Visible event-layer ids. */
@@ -24,7 +32,7 @@ export interface ViewState {
   params?: Record<string, string>;
 }
 
-const RESERVED_KEYS = new Set(['c', 'z', 's', 'e']);
+const RESERVED_KEYS = new Set(['c', 'z', 'n', 's', 'e']);
 
 /** ~1 m of precision; keeps URLs short and round-trips stable. */
 const COORD_DECIMALS = 5;
@@ -45,6 +53,9 @@ export function serializeViewState(state: ViewState): string {
   const lat = round(state.center[1], COORD_DECIMALS);
   search.set('c', `${lon},${lat}`);
   search.set('z', String(round(state.zoom, ZOOM_DECIMALS)));
+  if (state.nation !== undefined && state.nation !== '') {
+    search.set('n', state.nation);
+  }
   if (state.surface !== undefined) {
     search.set('s', state.surface);
   }
@@ -88,6 +99,10 @@ export function parseViewState(input: string): ViewState | null {
 
   const state: ViewState = { center: [lon, lat], zoom };
 
+  const nation = search.get('n');
+  if (nation !== null && nation !== '') {
+    state.nation = nation;
+  }
   const surface = search.get('s');
   if (surface !== null && surface !== '') {
     state.surface = surface;

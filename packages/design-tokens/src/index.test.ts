@@ -3,6 +3,8 @@ import { describe, expect, it } from 'vitest';
 import {
   bodyAnchor,
   color,
+  severityBand,
+  severityBandOrder,
   deckTextFloorPx,
   program,
   radius,
@@ -71,6 +73,25 @@ describe('type scale', () => {
     expect(typeScale.heading1.tracking).toBe(-0.025);
     expect(typeScale.body.tracking).toBe(0);
     expect(typeScale.caption.tracking).toBe(0);
+  });
+});
+
+describe('severity bands', () => {
+  it('defines all five bands with valid hex pairs', () => {
+    for (const [name, pair] of Object.entries(severityBand)) {
+      expect(pair.bg, name).toMatch(HEX);
+      expect(pair.ink, name).toMatch(HEX);
+    }
+  });
+
+  it('ranks most severe first with unstated unranked last', () => {
+    expect(severityBandOrder).toEqual(['extreme', 'severe', 'moderate', 'minor', 'unstated']);
+  });
+
+  it('inks are only white or the page ink, never a third color', () => {
+    for (const pair of Object.values(severityBand)) {
+      expect(['#FFFFFF', '#010B13']).toContain(pair.ink);
+    }
   });
 });
 
