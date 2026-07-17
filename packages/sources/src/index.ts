@@ -134,6 +134,63 @@ export function createSourceRegistry(records: SourceRecord[] = []): SourceRegist
  * to self-hosted PMTiles or a provider with appropriate terms before launch —
  * this is tracked in docs/ROADMAP.md.
  */
+/**
+ * Alert ingestion sources (wave 1c lane 0, 07/17/2026). Endpoint, CORS
+ * behavior, and payload shape verified live the same day (see the corpus
+ * manifest); license and cadence per the source-profile research. The
+ * maintainer's source-verification eyeball is tracked as a follow-up.
+ */
+
+/** Canonical NWS current-alert collection, for snapshots and direct top-up. */
+export const NWS_ALERTS_ACTIVE_SOURCE: SourceRecord = {
+  id: 'nws-alerts-active',
+  owner: 'NOAA National Weather Service',
+  url: 'https://api.weather.gov/alerts/active',
+  license:
+    'U.S. public domain unless otherwise noted; acknowledge NWS, do not imply endorsement, and do not present modified content as official.',
+  cadence: 'Event-driven; NWS asks clients to poll alerts no more often than every 30 seconds.',
+  region: 'us',
+  verifiedAt: '2026-07-17',
+  notes:
+    'No API key today. Distinctive User-Agent required for API clients (browsers cannot set one; ' +
+    'direct browser top-up is feature-gated, the snapshot spine is primary). ' +
+    'Access-Control-Allow-Origin: * observed 2026-07-17. Alert geometry may be absent; retain UGC/SAME codes. ' +
+    'Canadian counterpart: eccc-geomet-weather-alerts.',
+};
+
+/** Canonical ECCC current-alert collection (GeoMet OGC API), for snapshots and candidate direct top-up. */
+export const ECCC_GEOMET_WEATHER_ALERTS_SOURCE: SourceRecord = {
+  id: 'eccc-geomet-weather-alerts',
+  owner: 'Environment and Climate Change Canada, Meteorological Service of Canada',
+  url: 'https://api.weather.gc.ca/collections/weather-alerts/items',
+  license:
+    'ECCC Data Servers End-use Licence v2.1; attribution required; weather-alert content or intent must not be altered.',
+  cadence: 'Event-driven; ATNI polling policy 60 to 120 seconds. Contact ECCC before 86400 requests/day or more.',
+  region: 'ca',
+  verifiedAt: '2026-07-17',
+  notes:
+    'Anonymous OGC API - Features endpoint; collection id is "weather-alerts" (no -realtime variant). ' +
+    'Bilingual properties (alert_name_en/fr, impact_en/fr, confidence_en/fr) confirmed in a live capture 2026-07-17; ' +
+    'Access-Control-Allow-Origin: * observed the same day. Filter by properties.province for BC. ' +
+    'U.S. counterpart: nws-alerts-active.',
+};
+
+/** ECCC Datamart CAP-CP files: conformance and corpus provenance only, never a runtime feed. */
+export const ECCC_DATAMART_CAP_FILES_SOURCE: SourceRecord = {
+  id: 'eccc-datamart-cap-files',
+  owner: 'Environment and Climate Change Canada, Meteorological Service of Canada',
+  url: 'https://dd.weather.gc.ca/today/alerts/cap/',
+  license:
+    'ECCC Data Servers End-use Licence v2.1; attribution required; weather-alert content or intent must not be altered.',
+  cadence: 'Alert files may appear at any time; recurring HTTPS directory polling is prohibited by ECCC.',
+  region: 'ca',
+  verifiedAt: '2026-07-17',
+  notes:
+    'Individually addressed CAP-file retrieval and corpus provenance only. Moving retention window. ' +
+    'Never used as the DS-004 runtime feed; the sanctioned real-time channel (AMQPS) needs an always-on ' +
+    'subscriber and is out of scope for the serverless-static architecture.',
+};
+
 export const OSM_RASTER_BASEMAP: SourceRecord = {
   id: 'basemap-osm-raster',
   owner: 'OpenStreetMap Foundation',

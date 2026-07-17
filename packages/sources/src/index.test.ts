@@ -1,6 +1,9 @@
 import { describe, expect, it } from 'vitest';
 import {
   createSourceRegistry,
+  ECCC_DATAMART_CAP_FILES_SOURCE,
+  ECCC_GEOMET_WEATHER_ALERTS_SOURCE,
+  NWS_ALERTS_ACTIVE_SOURCE,
   OSM_RASTER_BASEMAP,
   validateSourceRecord,
   type SourceRecord,
@@ -78,5 +81,26 @@ describe('createSourceRegistry', () => {
     expect(ids).toContain('ca-feed');
     expect(ids).toContain('basemap-osm-raster');
     expect(ids).not.toContain('us-feed');
+  });
+});
+
+describe('alert ingestion source records', () => {
+  const RECORDS = [
+    NWS_ALERTS_ACTIVE_SOURCE,
+    ECCC_GEOMET_WEATHER_ALERTS_SOURCE,
+    ECCC_DATAMART_CAP_FILES_SOURCE,
+  ];
+
+  it('every shipped ingestion record validates cleanly', () => {
+    for (const record of RECORDS) {
+      expect(validateSourceRecord(record), record.id).toEqual([]);
+    }
+  });
+
+  it('registers all shipped records together without id collisions', () => {
+    const registry = createSourceRegistry([...RECORDS, OSM_RASTER_BASEMAP]);
+    expect(registry.get('nws-alerts-active').region).toBe('us');
+    expect(registry.get('eccc-geomet-weather-alerts').region).toBe('ca');
+    expect(registry.get('eccc-datamart-cap-files').notes).toMatch(/never used as the DS-004 runtime feed/i);
   });
 });

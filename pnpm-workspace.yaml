@@ -16,6 +16,10 @@ catalog:
   '@types/react': ^19.2.0
   '@types/react-dom': ^19.2.0
   '@vitejs/plugin-react': ^5.0.0
+  # CAP-CP XML conformance decoding (ingest-eccc). Pinned choice per the
+  # ingestion architecture design: pure JS, browser+node, DTD/external
+  # entities not processed.
+  fast-xml-parser: ^5.10.1
   vitest: ^3.2.4
   vite: ^7.1.0
   maplibre-gl: ^5.8.0

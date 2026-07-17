@@ -1,0 +1,25 @@
+{
+  "name": "@ewm/ingest-nws",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Pure NWS alert parser: api.weather.gov payloads to NormalizedAlert via the versioned NWS mapping table. No network code.",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
+    }
+  },
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@ewm/alerts-schema": "workspace:*",
+    "@ewm/ingest-core": "workspace:*"
+  },
+  "devDependencies": {
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}
