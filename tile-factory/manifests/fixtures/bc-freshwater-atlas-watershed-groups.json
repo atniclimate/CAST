@@ -1,0 +1,39 @@
+{
+  "manifest_version": "1.0.0",
+  "artifact_id": "bc-freshwater-atlas-watershed-groups",
+  "artifact_version": "0.0.0-example",
+  "artifact_uri": "PENDING_BUILD",
+  "owner": {
+    "name": "Government of British Columbia",
+    "url": "https://www2.gov.bc.ca/"
+  },
+  "input_sources": [
+    "https://catalogue.data.gov.bc.ca/dataset/51f20b1a-ab75-42de-809d-bf415a0f9c62"
+  ],
+  "vintage": {
+    "label": "BC Data Catalogue publication 2011-03-09; exact build snapshot not yet selected",
+    "as_of": "2011-03-09"
+  },
+  "license": {
+    "name": "Open Government Licence – British Columbia 2.0 (catalogue assignment not confirmed from rendered primary metadata)",
+    "url": "https://www2.gov.bc.ca/gov/content/data/policy-standards/data-policies/open-data/open-government-licence-bc",
+    "status": "unverified",
+    "verified_on": null,
+    "notes": "The primary BC license page confirms version 2.0 and states that it applies only to catalogue records that specify it. The dataset catalogue page required client-side rendering during this run, so the license assignment to this specific record remains unverified."
+  },
+  "attribution": "Contains information from the Freshwater Atlas, Government of British Columbia. License assignment must be verified before publication.",
+  "checksum": {
+    "algorithm": "sha256",
+    "status": "pending-build",
+    "value": "PENDING_BUILD"
+  },
+  "layers": [
+    {
+      "layer_id": "bc_fwa_watershed_groups",
+      "geometry_types": ["Polygon"],
+      "minzoom": 0,
+      "maxzoom": 12,
+      "attributes": ["watershed_group_id", "watershed_group_code", "name", "source_vintage"]
+    }
+  ]
+}

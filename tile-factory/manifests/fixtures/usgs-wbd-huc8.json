@@ -1,0 +1,40 @@
+{
+  "manifest_version": "1.0.0",
+  "artifact_id": "usgs-wbd-huc8",
+  "artifact_version": "0.0.0-example",
+  "artifact_uri": "PENDING_BUILD",
+  "owner": {
+    "name": "U.S. Geological Survey",
+    "url": "https://www.usgs.gov/"
+  },
+  "input_sources": [
+    "https://www.usgs.gov/national-hydrography/watershed-boundary-dataset",
+    "https://water.usgs.gov/themes/hydrologic-units/"
+  ],
+  "vintage": {
+    "label": "WBD 2025 Snapshot",
+    "as_of": "2025-01-01"
+  },
+  "license": {
+    "name": "Public Domain",
+    "url": "https://www.usgs.gov/national-hydrography/watershed-boundary-dataset",
+    "status": "verified",
+    "verified_on": "2026-07-17",
+    "notes": "The primary USGS WBD page labels the dataset and its media as Public Domain. The source describes the 2025 snapshot as the official WBD program version."
+  },
+  "attribution": "Source: U.S. Geological Survey, Watershed Boundary Dataset, WBD 2025 Snapshot.",
+  "checksum": {
+    "algorithm": "sha256",
+    "status": "pending-build",
+    "value": "PENDING_BUILD"
+  },
+  "layers": [
+    {
+      "layer_id": "usgs_wbd_huc8",
+      "geometry_types": ["Polygon"],
+      "minzoom": 0,
+      "maxzoom": 12,
+      "attributes": ["huc8", "name", "area_acres", "source_vintage"]
+    }
+  ]
+}

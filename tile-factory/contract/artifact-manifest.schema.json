@@ -1,0 +1,127 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "contract/artifact-manifest.schema.json",
+  "title": "Tile artifact manifest",
+  "description": "Metadata contract for one immutable tile artifact and its source provenance.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["manifest_version", "artifact_id", "artifact_version", "artifact_uri", "owner", "input_sources", "vintage", "license", "attribution", "checksum", "layers"],
+  "properties": {
+    "manifest_version": {
+      "title": "Manifest version",
+      "description": "Semantic version of this manifest contract used by the document.",
+      "type": "string",
+      "const": "1.0.0"
+    },
+    "artifact_id": {
+      "title": "Artifact identifier",
+      "description": "Stable lowercase identifier for the artifact family.",
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:[._-][a-z0-9]+)*$"
+    },
+    "artifact_version": {
+      "title": "Artifact version",
+      "description": "Immutable semantic version assigned to a built artifact.",
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+(?:-[0-9A-Za-z.-]+)?$"
+    },
+    "artifact_uri": {
+      "title": "Artifact URI",
+      "description": "Published artifact URL, or PENDING_BUILD for an example that has not been built.",
+      "oneOf": [
+        { "type": "string", "const": "PENDING_BUILD" },
+        { "type": "string", "format": "uri", "pattern": "^https://" }
+      ]
+    },
+    "owner": {
+      "title": "Artifact owner",
+      "description": "Authoritative source owner or publisher recorded for the artifact.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "url"],
+      "properties": {
+        "name": { "title": "Owner name", "description": "Public name of the authoritative source organization.", "type": "string", "minLength": 1 },
+        "url": { "title": "Owner URL", "description": "Canonical public URL for the authoritative source organization.", "type": "string", "format": "uri", "pattern": "^https://" }
+      }
+    },
+    "input_sources": {
+      "title": "Input sources",
+      "description": "One or more primary URLs from which source data or authoritative metadata are obtained.",
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "title": "Input source URL", "description": "Primary agency URL for an input or its authoritative catalogue record.", "type": "string", "format": "uri", "pattern": "^https://" }
+    },
+    "vintage": {
+      "title": "Source vintage",
+      "description": "Human and machine-readable identification of the source data vintage.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["label", "as_of"],
+      "properties": {
+        "label": { "title": "Vintage label", "description": "Agency release name, edition, or snapshot label.", "type": "string", "minLength": 1 },
+        "as_of": { "title": "Vintage date", "description": "Date represented by or selected for the source snapshot.", "type": "string", "format": "date" }
+      }
+    },
+    "license": {
+      "title": "License and terms",
+      "description": "Recorded reuse terms and their verification state for this source.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "url", "status", "verified_on", "notes"],
+      "properties": {
+        "name": { "title": "License name", "description": "Official license name or honest description of the applicable public-use terms.", "type": "string", "minLength": 1 },
+        "url": { "title": "Terms URL", "description": "Primary agency page containing or identifying the reuse terms.", "type": "string", "format": "uri", "pattern": "^https://" },
+        "status": { "title": "Terms status", "description": "Whether the terms were confirmed from a primary source for this dataset.", "type": "string", "enum": ["verified", "unverified"] },
+        "verified_on": { "title": "Verification date", "description": "Date of primary-source confirmation, or null when status is unverified.", "type": ["string", "null"], "format": "date" },
+        "notes": { "title": "Terms notes", "description": "Concise qualification, required attribution, disclaimer, or reason verification is incomplete.", "type": "string", "minLength": 1 }
+      },
+      "allOf": [
+        { "if": { "properties": { "status": { "title": "Verified status condition", "description": "Selects the verified terms branch.", "const": "verified" } }, "required": ["status"] }, "then": { "properties": { "verified_on": { "title": "Required verification date", "description": "Requires a date when terms are verified.", "type": "string", "format": "date" } } } },
+        { "if": { "properties": { "status": { "title": "Unverified status condition", "description": "Selects the unverified terms branch.", "const": "unverified" } }, "required": ["status"] }, "then": { "properties": { "verified_on": { "title": "Absent verification date", "description": "Requires null when terms are unverified.", "type": "null" } } } }
+      ]
+    },
+    "attribution": {
+      "title": "Attribution text",
+      "description": "Exact human-readable attribution intended to accompany the artifact.",
+      "type": "string",
+      "minLength": 1
+    },
+    "checksum": {
+      "title": "Artifact checksum",
+      "description": "SHA-256 identity of the built archive or the documented pre-build sentinel.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["algorithm", "status", "value"],
+      "properties": {
+        "algorithm": { "title": "Checksum algorithm", "description": "Digest algorithm required for tile artifacts.", "type": "string", "const": "sha256" },
+        "status": { "title": "Checksum status", "description": "Whether the digest is verified or awaits a build.", "type": "string", "enum": ["verified", "pending-build"] },
+        "value": { "title": "Checksum value", "description": "Lowercase SHA-256 digest, or PENDING_BUILD before an archive exists.", "type": "string" }
+      },
+      "allOf": [
+        { "if": { "properties": { "status": { "title": "Verified checksum condition", "description": "Selects the verified checksum branch.", "const": "verified" } }, "required": ["status"] }, "then": { "properties": { "value": { "title": "Verified checksum value", "description": "Requires a lowercase 64-character SHA-256 digest.", "pattern": "^[a-f0-9]{64}$" } } } },
+        { "if": { "properties": { "status": { "title": "Pending checksum condition", "description": "Selects the pending-build checksum branch.", "const": "pending-build" } }, "required": ["status"] }, "then": { "properties": { "value": { "title": "Pending checksum value", "description": "Requires the documented pre-build sentinel.", "const": "PENDING_BUILD" } } } }
+      ]
+    },
+    "layers": {
+      "title": "Layer inventory",
+      "description": "Inventory of vector layers encoded in the artifact.",
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "title": "Layer inventory entry",
+        "description": "One encoded layer and the runtime-visible fields it promises.",
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["layer_id", "geometry_types", "minzoom", "maxzoom", "attributes"],
+        "properties": {
+          "layer_id": { "title": "Layer identifier", "description": "Stable vector-tile source-layer identifier.", "type": "string", "pattern": "^[a-z][a-z0-9_]*$" },
+          "geometry_types": { "title": "Geometry types", "description": "Geometry families that may occur in the layer.", "type": "array", "minItems": 1, "uniqueItems": true, "items": { "title": "Geometry type", "description": "GeoJSON geometry family represented in vector tiles.", "type": "string", "enum": ["Point", "LineString", "Polygon"] } },
+          "minzoom": { "title": "Minimum zoom", "description": "Lowest zoom at which this layer has tile coverage.", "type": "integer", "minimum": 0, "maximum": 24 },
+          "maxzoom": { "title": "Maximum zoom", "description": "Highest native zoom at which this layer has tile coverage.", "type": "integer", "minimum": 0, "maximum": 24 },
+          "attributes": { "title": "Layer attributes", "description": "Runtime-visible attribute names retained in this layer.", "type": "array", "minItems": 1, "uniqueItems": true, "items": { "title": "Attribute name", "description": "Normalized vector-tile property name.", "type": "string", "pattern": "^[a-z][a-z0-9_]*$" } }
+        }
+      }
+    }
+  }
+}

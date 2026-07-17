@@ -1,0 +1,41 @@
+{
+  "manifest_version": "1.0.0",
+  "artifact_id": "census-aiannh-2024",
+  "artifact_version": "0.0.0-example",
+  "artifact_uri": "PENDING_BUILD",
+  "owner": {
+    "name": "U.S. Census Bureau",
+    "url": "https://www.census.gov/"
+  },
+  "input_sources": [
+    "https://www2.census.gov/geo/tiger/GENZ2024/shp/cb_2024_us_aiannh_500k.zip",
+    "https://www2.census.gov/geo/tiger/GENZ2024/2024_file_name_def.pdf",
+    "https://www.census.gov/programs-surveys/geography/technical-documentation/naming-convention/cartographic-boundary-file.html"
+  ],
+  "vintage": {
+    "label": "2024 Cartographic Boundary Files, AIANNH",
+    "as_of": "2024-01-01"
+  },
+  "license": {
+    "name": "U.S. federal government public data; dataset-specific reuse terms not confirmed",
+    "url": "https://www.census.gov/about/policies.html",
+    "status": "unverified",
+    "verified_on": null,
+    "notes": "The 2024 AIANNH file and its vintage were confirmed, but no primary page reviewed in this run stated dataset-specific copyright or license terms for the cartographic boundary file. Statistical boundaries are not legal land ownership or jurisdiction boundaries."
+  },
+  "attribution": "Source: U.S. Census Bureau, 2024 Cartographic Boundary Files. Census statistical boundaries do not establish legal land ownership or jurisdiction.",
+  "checksum": {
+    "algorithm": "sha256",
+    "status": "pending-build",
+    "value": "PENDING_BUILD"
+  },
+  "layers": [
+    {
+      "layer_id": "census_aiannh_2024",
+      "geometry_types": ["Polygon"],
+      "minzoom": 0,
+      "maxzoom": 12,
+      "attributes": ["area_id", "name", "area_type", "source_vintage"]
+    }
+  ]
+}

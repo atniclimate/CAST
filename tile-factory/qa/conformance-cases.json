@@ -1,0 +1,72 @@
+{
+  "suite_version": "1.0.0",
+  "title": "Tile factory PMTiles conformance cases",
+  "archive_status": "deferred-pending-toolchain-ruling",
+  "description": "Declarative checks for the future binary conformance PMTiles archive. The archive itself is deferred until the proposed toolchain and repository exemption are ratified.",
+  "contract_paths": [
+    "contract/artifact-manifest.schema.json",
+    "contract/source-layer-contract.schema.json"
+  ],
+  "cases": [
+    {
+      "id": "manifest-schema",
+      "category": "metadata",
+      "description": "Validate the artifact manifest against the artifact manifest schema before inspecting an archive.",
+      "expected": "The manifest has no schema violations and contains no pending-build sentinels for a publish candidate."
+    },
+    {
+      "id": "layer-ids-present",
+      "category": "inventory",
+      "description": "Compare PMTiles vector layer metadata and decoded sample tiles with the manifest inventory.",
+      "expected": "Every declared layer_id is present and no undeclared layer id is encoded."
+    },
+    {
+      "id": "zoom-coverage",
+      "category": "coverage",
+      "description": "For each layer, inspect representative occupied tiles at every integer zoom from minzoom through maxzoom, including the declared geographic extremities.",
+      "expected": "Coverage exists throughout each declared zoom range, no features occur below minzoom, and archive metadata does not claim a maxzoom below the layer contract."
+    },
+    {
+      "id": "required-attributes",
+      "category": "attributes",
+      "description": "Decode a deterministic sample from every layer, including boundary and sparse tiles, and inspect every feature in that sample.",
+      "expected": "Every required attribute is present with the contracted scalar type; non-nullable attributes are neither absent nor empty."
+    },
+    {
+      "id": "checksum-match",
+      "category": "integrity",
+      "description": "Calculate SHA-256 over the exact PMTiles bytes selected for publication.",
+      "expected": "The lowercase digest exactly matches checksum.value in the manifest and checksum.status is verified."
+    },
+    {
+      "id": "tile-seam-continuity",
+      "category": "seam-topology",
+      "description": "Inspect polygon rings crossing horizontal and vertical vector-tile boundaries at minzoom, maxzoom, and one intermediate zoom.",
+      "expected": "Reassembled geometries show no cracks, overlaps introduced by clipping, or missing slivers at tile seams within the simplification tolerance recorded by the future build."
+    },
+    {
+      "id": "shared-boundary-topology",
+      "category": "seam-topology",
+      "description": "Inspect adjacent polygons that share source boundaries, including HUC8 and watershed-group neighbors, before and after tile clipping.",
+      "expected": "Shared edges remain coincident within the future build tolerance; polygons are valid and do not gain self-intersections, ring reversals, or artificial gaps."
+    },
+    {
+      "id": "multipart-and-hole-preservation",
+      "category": "seam-topology",
+      "description": "Inspect deterministic multipart, island, enclave, and interior-ring fixtures from each applicable source layer.",
+      "expected": "Parts and meaningful holes survive encoding at contracted zooms, subject only to an explicitly approved and recorded minimum-area policy."
+    },
+    {
+      "id": "world-wrap-and-antimeridian",
+      "category": "seam-topology",
+      "description": "Inspect geometries nearest longitude -180 and 180 and render the archive across a wrapped world boundary.",
+      "expected": "No wraparound spikes, duplicate world-spanning polygons, or invalid long edges are introduced."
+    },
+    {
+      "id": "deterministic-rebuild",
+      "category": "reproducibility",
+      "description": "Build twice from byte-identical inputs with the same pinned tools and declared parameters.",
+      "expected": "Archive SHA-256 digests match; otherwise publication is blocked until nondeterminism is explained and governed."
+    }
+  ]
+}

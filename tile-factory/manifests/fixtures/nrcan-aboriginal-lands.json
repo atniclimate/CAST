@@ -1,0 +1,39 @@
+{
+  "manifest_version": "1.0.0",
+  "artifact_id": "nrcan-aboriginal-lands",
+  "artifact_version": "0.0.0-example",
+  "artifact_uri": "PENDING_BUILD",
+  "owner": {
+    "name": "Natural Resources Canada",
+    "url": "https://natural-resources.canada.ca/"
+  },
+  "input_sources": [
+    "https://open.canada.ca/data/en/dataset/522b07b9-78e2-4819-b736-ad9208eb1067"
+  ],
+  "vintage": {
+    "label": "Aboriginal Lands of Canada Legislative Boundaries, data last updated 2024-02-15",
+    "as_of": "2024-02-15"
+  },
+  "license": {
+    "name": "Open Government Licence – Canada 2.0",
+    "url": "https://open.canada.ca/en/open-government-licence-canada",
+    "status": "verified",
+    "verified_on": "2026-07-17",
+    "notes": "The primary Open Government Portal dataset record identifies Natural Resources Canada and the Open Government Licence – Canada; the primary license page identifies the terms as version 2.0 and supplies the default attribution statement."
+  },
+  "attribution": "Contains information licensed under the Open Government Licence – Canada.",
+  "checksum": {
+    "algorithm": "sha256",
+    "status": "pending-build",
+    "value": "PENDING_BUILD"
+  },
+  "layers": [
+    {
+      "layer_id": "nrcan_aboriginal_lands",
+      "geometry_types": ["Polygon"],
+      "minzoom": 0,
+      "maxzoom": 12,
+      "attributes": ["land_id", "name", "land_type", "source_vintage"]
+    }
+  ]
+}
