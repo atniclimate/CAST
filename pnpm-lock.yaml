@@ -102,6 +102,9 @@ importers:
       vite:
         specifier: 'catalog:'
         version: 7.3.6
+      vitest:
+        specifier: 'catalog:'
+        version: 3.2.7
 
   modules/hydro:
     dependencies:
