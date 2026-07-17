@@ -1,0 +1,115 @@
+/*
+ * ATNI Climate Design System — CSS custom properties.
+ * Source of truth: the design system handoff (foundations release).
+ * Import alongside fonts.css. All edges are square; radius is 0 everywhere.
+ *
+ * Web products default to the dark ground. The reader keeps the choice:
+ * [data-theme="light"] switches the semantic layer; raw palette tokens
+ * never change between themes.
+ */
+
+:root {
+  /* Core palette */
+  --color-atni-red: #e13d33;
+  --color-red-alt: #b02821;
+  --color-red-alt-hover: #8c1f19;
+  --color-black-bg: #010b13;
+  --color-grey: #636363;
+  --color-grey-alt: #3b3b3b;
+  --color-surface: #ffffff;
+  --color-surface-tint: #f4f7fb;
+  --color-text-on-dark: #e8ecf0;
+  --color-red-on-dark: #f26b5e;
+
+  /* Dark surface ladder: surfaces lighten as they rise; no shadows on dark */
+  --surface-base: #010b13;
+  --surface-raised: #141414;
+  --surface-overlay: #1e242c;
+  --rule-heavy: #141414;
+
+  /* Climate program palette */
+  --color-program-red-element: #c30101;
+  --color-program-grey: #98a1b4;
+  /* RESERVED: land, Treaty, and sovereignty content only */
+  --color-tribal-magenta: #9732b4;
+
+  /* Semantic / component colors */
+  --color-muted-text: #8a94a6;
+  --color-deemphasized-text: #c6cbd4;
+  --color-hairline: #e7ecf3;
+  --color-hairline-alt: #eef1f6;
+  --color-status-active-text: #1c8a5e;
+  --color-status-active-tag-bg: #e6f9f1;
+  --color-status-active-callout-bg: #eaf7f0;
+  --color-status-review-text: #b4740e;
+  --color-status-review-bg: #fdf3e2;
+  --color-callout-note-bg: #fbeeed;
+  --color-callout-sovereignty-bg: #f9edfb;
+  --color-tag-sovereignty-bg: #f6e6f8;
+  --color-tag-neutral-bg: #eef1f6;
+
+  /* Typography */
+  --font-display: 'Spartan MB', 'Arial Black', sans-serif;
+  --font-body: 'TeX Gyre Heros', 'Helvetica Neue', Arial, sans-serif;
+  --font-condensed: 'TeX Gyre Heros Cn', 'Arial Narrow', sans-serif;
+  --font-quote: 'TeX Gyre Adventor', 'Century Gothic', sans-serif;
+  --font-serif: 'TeX Gyre Termes', 'Times New Roman', serif;
+
+  /* Type scale: every style is a ratio of Body (web anchor 16px = 1rem) */
+  --type-body-size: 1rem;
+  --type-title-size: calc(var(--type-body-size) * 2.55);
+  --type-subtitle-size: calc(var(--type-body-size) * 1.25);
+  --type-h1-size: calc(var(--type-body-size) * 2.25);
+  --type-h2-size: calc(var(--type-body-size) * 1.75);
+  --type-h3-size: calc(var(--type-body-size) * 1.17);
+  --type-quote-size: calc(var(--type-body-size) * 1.3125);
+  --type-caption-size: calc(var(--type-body-size) * 0.8125);
+
+  --type-title-lh: 1.14;
+  --type-subtitle-lh: 1.3;
+  --type-h1-lh: 1.1;
+  --type-h2-lh: 1.15;
+  --type-h3-lh: 1.2;
+  --type-quote-lh: 1.4;
+  --type-body-lh: 1.6;
+  --type-caption-lh: 1.4;
+
+  --tracking-display: -0.025em;
+  --tracking-h3: -0.01em;
+  --tracking-subtitle: 0.01em;
+
+  /* Shape and space */
+  --radius: 0;
+  --space-section-top: 96px;
+  --space-section-rule-pt: 64px;
+  --space-subhead-top: 52px;
+  --width-content-max: 1080px;
+  --width-reading-measure: 640px;
+  --shadow-light-card: 0 1px 3px rgba(11, 18, 32, 0.08);
+  --button-padding: 11px 20px;
+  --button-padding-hero: 13px 22px;
+  --card-padding: 22px 24px;
+
+  /* Semantic layer — dark ground (web default). Body weight bumps to 500. */
+  --ground: var(--surface-base);
+  --ground-raised: var(--surface-raised);
+  --ground-overlay: var(--surface-overlay);
+  --ink-body: var(--color-text-on-dark);
+  --ink-heading: #ffffff;
+  --ink-secondary: var(--color-program-grey);
+  --link: var(--color-red-on-dark);
+  --body-weight: 500;
+  --card-shadow: none;
+}
+
+:root[data-theme='light'] {
+  --ground: var(--color-surface-tint);
+  --ground-raised: var(--color-surface);
+  --ground-overlay: var(--color-surface);
+  --ink-body: var(--color-grey);
+  --ink-heading: var(--color-black-bg);
+  --ink-secondary: var(--color-grey-alt);
+  --link: var(--color-red-alt);
+  --body-weight: 400;
+  --card-shadow: var(--shadow-light-card);
+}

@@ -1,0 +1,150 @@
+/*
+ * Self-hosted fonts — ATNI Climate Design System.
+ * No Google, Microsoft, or any external font service, ever.
+ * Files ship in ../fonts/ (see its README for licensing).
+ * Spartan MB ships as WOFF2; the TeX Gyre families ship as OTF from the
+ * design handoff (WOFF2 conversion is a tracked follow-up).
+ */
+
+/* Spartan MB — display (OFL rework of League Spartan) */
+@font-face {
+  font-family: 'Spartan MB';
+  src: url('../fonts/spartanmb-400.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Spartan MB';
+  src: url('../fonts/spartanmb-500.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Spartan MB';
+  src: url('../fonts/spartanmb-600.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Spartan MB';
+  src: url('../fonts/spartanmb-700.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Spartan MB';
+  src: url('../fonts/spartanmb-800.woff2') format('woff2');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* TeX Gyre Heros — body */
+@font-face {
+  font-family: 'TeX Gyre Heros';
+  src: url('../fonts/texgyreheros-regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'TeX Gyre Heros';
+  src: url('../fonts/texgyreheros-italic.otf') format('opentype');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'TeX Gyre Heros';
+  src: url('../fonts/texgyreheros-bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'TeX Gyre Heros';
+  src: url('../fonts/texgyreheros-bolditalic.otf') format('opentype');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* TeX Gyre Heros Cn — subtitles, space-tight labels */
+@font-face {
+  font-family: 'TeX Gyre Heros Cn';
+  src: url('../fonts/texgyreheroscn-regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'TeX Gyre Heros Cn';
+  src: url('../fonts/texgyreheroscn-bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* TeX Gyre Adventor — quotes */
+@font-face {
+  font-family: 'TeX Gyre Adventor';
+  src: url('../fonts/texgyreadventor-regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'TeX Gyre Adventor';
+  src: url('../fonts/texgyreadventor-italic.otf') format('opentype');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'TeX Gyre Adventor';
+  src: url('../fonts/texgyreadventor-bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'TeX Gyre Adventor';
+  src: url('../fonts/texgyreadventor-bolditalic.otf') format('opentype');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* TeX Gyre Termes — serif for formal print */
+@font-face {
+  font-family: 'TeX Gyre Termes';
+  src: url('../fonts/texgyretermes-regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'TeX Gyre Termes';
+  src: url('../fonts/texgyretermes-italic.otf') format('opentype');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'TeX Gyre Termes';
+  src: url('../fonts/texgyretermes-bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'TeX Gyre Termes';
+  src: url('../fonts/texgyretermes-bolditalic.otf') format('opentype');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}

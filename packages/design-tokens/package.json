@@ -1,0 +1,23 @@
+{
+  "name": "@ewm/design-tokens",
+  "version": "0.1.0",
+  "private": true,
+  "description": "ATNI Climate Design System as code: color, type scale, surface ladder, spacing, and self-hosted fonts. Every visual surface in ATNI-CAST derives from these tokens.",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
+    },
+    "./tokens.css": "./src/tokens.css",
+    "./fonts.css": "./src/fonts.css"
+  },
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}
