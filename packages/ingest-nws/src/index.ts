@@ -1,6 +1,7 @@
 import { mapNwsAlert, type AlertMessageType, type NormalizedAlert } from '@ewm/alerts-schema';
 import {
   stampAlertProvenance,
+  type IngestDiagnostic,
   type ParseContext,
   type ParseFailure,
   type ParseOutcome,
@@ -205,6 +206,21 @@ function decodePolygonGeometry(value: unknown): PolygonGeometry | null {
   );
 }
 
+/**
+ * api.weather.gov keeps synthetic monitoring entries (CAP status "Test",
+ * null headline) inside alerts/active. Test and exercise messages are
+ * intentional exclusions with countable diagnostics, never hard failures,
+ * so one synthetic item cannot reject an otherwise valid batch.
+ */
+const EXCLUDED_CAP_STATUSES: ReadonlySet<string> = new Set(['test', 'exercise']);
+
+function excludedCapStatus(value: unknown): string | undefined {
+  if (!isRecord(value) || !isRecord(value.properties)) return undefined;
+  const status = value.properties.status;
+  if (typeof status !== 'string') return undefined;
+  return EXCLUDED_CAP_STATUSES.has(status.trim().toLowerCase()) ? status : undefined;
+}
+
 function extractOriginalId(value: unknown): string | undefined {
   if (!isRecord(value)) return undefined;
   if (isRecord(value.properties) && typeof value.properties.id === 'string') {
@@ -335,7 +351,22 @@ export function parseNws(payload: unknown, context: ParseContext): NwsParseOutco
 
   const messages: NwsNormalizedAlert[] = [];
   const failures: ParseFailure[] = [];
+  const diagnostics: IngestDiagnostic[] = [];
   decoded.features.forEach((feature, itemIndex) => {
+    const excludedStatus = excludedCapStatus(feature);
+    if (excludedStatus !== undefined) {
+      const originalId = extractOriginalId(feature);
+      diagnostics.push(
+        Object.freeze({
+          code: 'nws-status-excluded',
+          message: `CAP status "${excludedStatus}" message excluded from the active alert set`,
+          severity: 'info',
+          itemIndex,
+          ...(originalId === undefined ? {} : { originalId }),
+        }),
+      );
+      return;
+    }
     try {
       messages.push(decodeFeature(feature, context));
     } catch (error) {
@@ -347,7 +378,7 @@ export function parseNws(payload: unknown, context: ParseContext): NwsParseOutco
     messages: Object.freeze(messages),
     observedAt: context.fetchedAt,
     ...(decoded.sourceUpdatedAt === undefined ? {} : { sourceUpdatedAt: decoded.sourceUpdatedAt }),
-    diagnostics: Object.freeze([]),
+    diagnostics: Object.freeze(diagnostics),
     failures: Object.freeze(failures),
     completeness: failures.length === 0 ? 'complete' : 'rejected',
   });

@@ -10,6 +10,7 @@ import { describe, expect, it } from 'vitest';
 import cancelRaw from '../fixtures/synthetic/cancel.json?raw';
 import malformedRaw from '../fixtures/synthetic/malformed-feature.json?raw';
 import missingCoverageRaw from '../fixtures/synthetic/missing-coverage.json?raw';
+import testMessageRaw from '../fixtures/synthetic/test-message.json?raw';
 import polygonRaw from '../fixtures/live/alert-flood-warning-polygon-LAC019.json?raw';
 import zoneRaw from '../fixtures/live/alert-red-flag-warning-zone-ORZ691.json?raw';
 import { parseNws } from './index.js';
@@ -21,6 +22,7 @@ const FIXTURE_TEXT: Readonly<Record<string, string>> = Object.freeze({
   'synthetic/malformed-feature.json': malformedRaw,
   'synthetic/missing-coverage.json': missingCoverageRaw,
   'synthetic/cancel.json': cancelRaw,
+  'synthetic/test-message.json': testMessageRaw,
 });
 const CONTEXT: ParseContext = {
   source: {
@@ -108,6 +110,13 @@ const REPLAY_FIXTURES: readonly CorpusFixture<unknown>[] = [
     decode: decodeJson,
     expectedCompleteness: 'complete',
   },
+  {
+    label: 'synthetic NWS test/keepalive message',
+    relativePath: 'synthetic/test-message.json',
+    context: CONTEXT,
+    decode: decodeJson,
+    expectedCompleteness: 'complete',
+  },
 ];
 
 describe('parseNws', () => {
@@ -115,8 +124,8 @@ describe('parseNws', () => {
     const report = await replayCorpus(FIXTURE_ROOT, REPLAY_FIXTURES, parseNws, readFixture);
 
     expect(report).toMatchObject({
-      fixtureCount: 5,
-      completeCount: 3,
+      fixtureCount: 6,
+      completeCount: 4,
       rejectedCount: 2,
       messageCount: 3,
       failureCount: 2,
@@ -159,6 +168,50 @@ describe('parseNws', () => {
     expect(outcome.failures).toEqual([
       expect.objectContaining({ itemIndex: 1, originalId: 'synthetic-malformed' }),
     ]);
+  });
+
+  it('excludes CAP test and exercise messages as countable diagnostics, never failures', () => {
+    const testMessage = firstFeature(loadFixture('synthetic/test-message.json'));
+    const valid = loadFixture('live/alert-red-flag-warning-zone-ORZ691.json');
+    const outcome = parseNws(
+      { type: 'FeatureCollection', features: [testMessage, valid] },
+      CONTEXT,
+    );
+
+    expect(outcome.completeness).toBe('complete');
+    expect(outcome.messages).toHaveLength(1);
+    expect(outcome.messages[0]?.originalDesignation).toBe('Red Flag Warning');
+    expect(outcome.failures).toEqual([]);
+    expect(outcome.diagnostics).toEqual([
+      expect.objectContaining({
+        code: 'nws-status-excluded',
+        severity: 'info',
+        itemIndex: 0,
+        originalId: 'synthetic-test-message',
+      }),
+    ]);
+
+    const exercise = JSON.parse(JSON.stringify(testMessage)) as {
+      properties: Record<string, unknown>;
+    };
+    exercise.properties.status = 'Exercise';
+    const exerciseOutcome = parseNws(
+      { type: 'FeatureCollection', features: [exercise] },
+      CONTEXT,
+    );
+    expect(exerciseOutcome.completeness).toBe('complete');
+    expect(exerciseOutcome.messages).toHaveLength(0);
+    expect(exerciseOutcome.diagnostics).toHaveLength(1);
+
+    const actual = JSON.parse(JSON.stringify(valid)) as { properties: Record<string, unknown> };
+    actual.properties.status = 'Actual';
+    const actualOutcome = parseNws(
+      { type: 'FeatureCollection', features: [actual] },
+      CONTEXT,
+    );
+    expect(actualOutcome.completeness).toBe('complete');
+    expect(actualOutcome.messages).toHaveLength(1);
+    expect(actualOutcome.diagnostics).toEqual([]);
   });
 
   it('stamps complete provenance on every emitted alert', () => {

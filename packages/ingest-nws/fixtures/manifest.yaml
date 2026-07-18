@@ -35,3 +35,12 @@ fixtures:
     kind: synthetic
     sha256: 00099b12772bfcb6e62d7b508dd5ca59404bae67a1bb47e93e9cf85c2ffdd8c0
     branches: [cancel-message]
+
+  - path: synthetic/test-message.json
+    kind: synthetic
+    sha256: 8e86317ccc49623a4585bb897e28559e0a961915d676c965bb87506c1e935648
+    branches: [status-test-excluded]
+    note: >
+      Models the api.weather.gov KEEPALIVE monitoring entries observed in the
+      live national alerts/active capture (CAP status Test, null headline).
+      Proves test/exercise exclusion as a countable diagnostic.
