@@ -1,0 +1,30 @@
+{
+  "name": "@ewm/ingest-snapshot",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Node-only snapshot transport: scheduled writer publishing content-addressed alert snapshots with the manifest written last. Never enters the browser graph.",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
+    }
+  },
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@ewm/alerts-schema": "workspace:*",
+    "@ewm/core-net": "workspace:*",
+    "@ewm/ingest-core": "workspace:*",
+    "@ewm/ingest-eccc": "workspace:*",
+    "@ewm/ingest-nws": "workspace:*",
+    "@ewm/sources": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

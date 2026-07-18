@@ -14,9 +14,14 @@
   "dependencies": {
     "@ewm/alerts-schema": "workspace:*",
     "@ewm/contract": "workspace:*",
+    "@ewm/core-net": "workspace:*",
     "@ewm/core-state": "workspace:*",
     "@ewm/core-status": "workspace:*",
     "@ewm/design-tokens": "workspace:*",
+    "@ewm/ingest-core": "workspace:*",
+    "@ewm/ingest-eccc": "workspace:*",
+    "@ewm/ingest-nws": "workspace:*",
+    "@ewm/sources": "workspace:*",
     "@ewm/tribal-registry": "workspace:*",
     "react": "catalog:",
     "react-dom": "catalog:"
