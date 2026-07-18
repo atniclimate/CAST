@@ -301,6 +301,7 @@ function decodeFeature(value: unknown, context: ParseContext): NwsNormalizedAler
 function decodeCollection(payload: unknown): {
   readonly features: readonly unknown[];
   readonly sourceUpdatedAt?: string;
+  readonly truncated: boolean;
 } {
   const collection = requireRecord(payload, 'payload');
   if (collection.type !== 'FeatureCollection') {
@@ -315,10 +316,19 @@ function decodeCollection(payload: unknown): {
       'NWS alerts/active payload must contain a features array',
     );
   }
+  // api.weather.gov pages at a 500-item cap and includes pagination.next
+  // only when further pages exist. A single page of a longer collection
+  // could conceal active alerts; transports must deliver the full
+  // collection (following pagination) or the batch rejects to last-good.
+  const truncated =
+    isRecord(collection.pagination) &&
+    typeof collection.pagination.next === 'string' &&
+    collection.pagination.next.trim() !== '';
   const sourceUpdatedAt = optionalTimestamp(collection.updated, 'collection.updated');
   return {
     features: collection.features,
     ...(sourceUpdatedAt === undefined ? {} : { sourceUpdatedAt }),
+    truncated,
   };
 }
 
@@ -373,6 +383,16 @@ export function parseNws(payload: unknown, context: ParseContext): NwsParseOutco
       failures.push(itemFailure(error, itemIndex, extractOriginalId(feature)));
     }
   });
+
+  if (decoded.truncated) {
+    failures.push(
+      Object.freeze({
+        code: 'nws-truncated-collection',
+        message:
+          'NWS collection carries pagination.next; a partial page could conceal active alerts',
+      }),
+    );
+  }
 
   return Object.freeze({
     messages: Object.freeze(messages),

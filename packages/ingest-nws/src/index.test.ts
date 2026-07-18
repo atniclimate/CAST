@@ -214,6 +214,31 @@ describe('parseNws', () => {
     expect(actualOutcome.diagnostics).toEqual([]);
   });
 
+  it('rejects a paginated collection rather than conceal further pages', () => {
+    const valid = loadFixture('live/alert-red-flag-warning-zone-ORZ691.json');
+    const outcome = parseNws(
+      {
+        type: 'FeatureCollection',
+        features: [valid],
+        pagination: { next: 'https://api.weather.gov/alerts/active?cursor=synthetic' },
+      },
+      CONTEXT,
+    );
+
+    expect(outcome.completeness).toBe('rejected');
+    expect(outcome.failures).toEqual([
+      expect.objectContaining({ code: 'nws-truncated-collection' }),
+    ]);
+    expect(outcome.messages).toHaveLength(1);
+
+    const noNext = parseNws(
+      { type: 'FeatureCollection', features: [valid], pagination: {} },
+      CONTEXT,
+    );
+    expect(noNext.completeness).toBe('complete');
+    expect(noNext.failures).toEqual([]);
+  });
+
   it('stamps complete provenance on every emitted alert', () => {
     const payloads = [
       loadFixture('live/alert-flood-warning-polygon-LAC019.json'),

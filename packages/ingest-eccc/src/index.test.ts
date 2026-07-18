@@ -50,11 +50,11 @@ describe('@ewm/ingest-eccc corpus replay', () => {
   it('replays every vendored live and synthetic payload deterministically with valid provenance', async () => {
     const geoFixtures: readonly CorpusFixture<Uint8Array>[] = [
       {
-        label: 'live GeoMet FeatureCollection',
+        label: 'live GeoMet FeatureCollection (limit=10 page of 504 matched: truncated)',
         relativePath: 'live/weather-alerts-items-limit10.json',
         context: geometContext,
         decode: (input) => input,
-        expectedCompleteness: 'complete',
+        expectedCompleteness: 'rejected',
       },
       {
         label: 'synthetic impact precedence cases',
@@ -107,7 +107,7 @@ describe('@ewm/ingest-eccc corpus replay', () => {
     const geoReport = await replayCorpus(FIXTURE_ROOT, geoFixtures, parseEcccGeoMet, reader);
     const capReport = await replayCorpus(FIXTURE_ROOT, capFixtures, parseEcccCapCp, reader);
 
-    expect(geoReport).toMatchObject({ fixtureCount: 5, completeCount: 4, rejectedCount: 1 });
+    expect(geoReport).toMatchObject({ fixtureCount: 5, completeCount: 3, rejectedCount: 2 });
     expect(capReport).toMatchObject({ fixtureCount: 2, completeCount: 2, rejectedCount: 0 });
     expect([...geoReport.fixtures, ...capReport.fixtures]).toHaveLength(7);
     expect([...geoReport.fixtures, ...capReport.fixtures].every((item) => /^[a-f0-9]{64}$/.test(item.inputSha256))).toBe(true);
@@ -119,7 +119,14 @@ describe('GeoMet production wire', () => {
     const outcome = parseGeo('live/weather-alerts-items-limit10.json');
     const alert = outcome.messages[0];
 
-    expect(outcome).toMatchObject({ completeness: 'complete', failures: [] });
+    // This live capture is a deliberate limit=10 page of 504 matched alerts:
+    // items still normalize faithfully, but the truncated page rejects the
+    // batch so a partial collection can never publish as complete.
+    expect(outcome.completeness).toBe('rejected');
+    expect(outcome.failures).toEqual([
+      expect.objectContaining({ code: 'eccc-truncated-collection' }),
+    ]);
+    expect(outcome.messages).toHaveLength(10);
     expect(Object.keys(alert?.sourceLanguage ?? {})).toEqual(['en-CA', 'fr-CA']);
     expect(alert?.sourceLanguage['en-CA']?.description).toContain('Conditions are favourable');
     expect(alert?.sourceLanguage['fr-CA']?.description).toContain('Les conditions sont propices');

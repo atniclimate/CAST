@@ -162,7 +162,7 @@ export const NWS_ALERTS_ACTIVE_SOURCE: SourceRecord = {
 export const ECCC_GEOMET_WEATHER_ALERTS_SOURCE: SourceRecord = {
   id: 'eccc-geomet-weather-alerts',
   owner: 'Environment and Climate Change Canada, Meteorological Service of Canada',
-  url: 'https://api.weather.gc.ca/collections/weather-alerts/items',
+  url: 'https://api.weather.gc.ca/collections/weather-alerts/items?filter=properties.province=BC&limit=500',
   license:
     'ECCC Data Servers End-use Licence v2.1; attribution required; weather-alert content or intent must not be altered.',
   cadence: 'Event-driven; ATNI polling policy 60 to 120 seconds. Contact ECCC before 86400 requests/day or more.',
@@ -171,7 +171,10 @@ export const ECCC_GEOMET_WEATHER_ALERTS_SOURCE: SourceRecord = {
   notes:
     'Anonymous OGC API - Features endpoint; collection id is "weather-alerts" (no -realtime variant). ' +
     'Bilingual properties (alert_name_en/fr, impact_en/fr, confidence_en/fr) confirmed in a live capture 2026-07-17; ' +
-    'Access-Control-Allow-Origin: * observed the same day. Filter by properties.province for BC. ' +
+    'Access-Control-Allow-Origin: * observed the same day. The server pages at a 500-item cap ' +
+    '(verified live 2026-07-17: unfiltered 535 matched / 500 returned with a next link), so the ' +
+    'registered URL carries the BC province filter and an explicit limit=500; parsers reject any ' +
+    'page whose numberMatched exceeds its feature count rather than publish a partial collection. ' +
     'U.S. counterpart: nws-alerts-active.',
 };
 

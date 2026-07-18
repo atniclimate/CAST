@@ -172,6 +172,23 @@ export const parseEcccGeoMet: IngestParser<Uint8Array> = (
     }
   });
 
+  // The OGC endpoint pages at a server cap (500 observed live). A partial
+  // page that conceals active alerts must reject the batch, never publish
+  // as complete; last-good data is retained downstream.
+  const matched = decoded.numberMatched;
+  if (
+    typeof matched === 'number' &&
+    Number.isFinite(matched) &&
+    matched > decoded.features.length
+  ) {
+    failures.push(
+      failure(
+        'eccc-truncated-collection',
+        `GeoMet page returned ${String(decoded.features.length)} of ${String(matched)} matched alerts; a partial page could conceal active alerts`,
+      ),
+    );
+  }
+
   const outcome: {
     messages: typeof messages;
     observedAt: string;

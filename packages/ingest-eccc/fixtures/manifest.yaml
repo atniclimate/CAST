@@ -6,6 +6,11 @@ fixtures:
     fetched_at: 2026-07-17T20:46:52Z
     bytes: 76756
     sha256: b09dac9c9094a5186ed9aac56dc00c87cc47af9f6f48338500d460ab192aa384
+    note: >
+      Deliberate limit=10 page of 504 matched alerts (numberMatched > features):
+      now doubles as the live truncated-collection rejection branch
+      (eccc-truncated-collection). Language, geometry, and coverage assertions
+      still read its faithfully normalized items.
   - path: live/T_WWCN13_C_CWVR_202607170903_2092774527.cap
     kind: live
     source_url: https://dd.weather.gc.ca/20260717/WXO-DD/alerts/cap/20260717/CWVR/09/T_WWCN13_C_CWVR_202607170903_2092774527.cap
